@@ -14,6 +14,7 @@
                     <th>Status</th>
                     <th>Date of Request</th>
                     <th>Date of Completion</th>
+                    <th>Remarks</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,6 +25,7 @@
                     <td>{{ service_request.status }}</td>
                     <td>{{ service_request.date_of_request }}</td>
                     <td>{{ service_request.date_of_completion }}</td>
+                    <td>{{ service_request.remarks }}</td>
                 </tr>
                 {% endfor %}
                 

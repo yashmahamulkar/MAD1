@@ -46,7 +46,6 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="{{ url_for('customer.dashboard') }}">Home</a>
                     </li>
-              
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('customer.customer_service_request') }}">Your Service Requests</a>
                     </li>
@@ -70,8 +69,13 @@
                         <!-- Form to mark as completed and add remarks -->
                         <form method="POST" action="{{ url_for('customer.mark_as_completed', request_id=request.id) }}">
                             <div class="mb-3">
-                                <label for="remarks" class="form-label">Add Remark</label>
-                                <textarea name="remarks" id="remarks" class="form-control" rows="3"></textarea>
+                                <label for="remarks" class="form-label">Customer Reaction</label>
+                                <select name="remarks" id="remarks" class="form-select">
+                                    <option value="satisfied">Satisfied</option>
+                                    <option value="neutral">Neutral</option>
+                                    <option value="dissatisfied">Dissatisfied</option>
+                                    <option value="fraud">Fraud</option>
+                                </select>
                             </div>
                             <button type="submit" class="btn btn-success">Mark as Completed</button>
                         </form>

@@ -1,6 +1,7 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from . import db
+from datetime import datetime
 
 def get_db():
     from . import db  # Import db here to avoid circular import
@@ -17,6 +18,7 @@ class Customer(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+    
     
 class ServiceProfessional(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -77,7 +79,7 @@ class FakeAdmin(UserMixin):
     is_authenticated = True
     is_active = True
     is_anonymous = False
-
+    
     def get_id(self):
         return str(self.id)  # Return the ID as a string
 
@@ -94,3 +96,34 @@ class Admin(UserMixin, db.Model):
     
     def check_password(self, password):
         return self.password == password
+    
+    
+    
+class FraudulentCustomer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=True)
+    service_request_id = db.Column(db.Integer, db.ForeignKey('service_request.id'), nullable=False)
+   
+    report_date = db.Column(db.DateTime, default=datetime.utcnow)
+
+    customer = db.relationship('Customer', backref='fraud_reports')
+    service_request = db.relationship('ServiceRequest', backref='fraud_reports')
+
+    def __repr__(self):
+        return f'<FraudulentCustomer {self.customer_id} - {self.service_request_id}>'
+    
+class DisabledCustomer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password_hash = db.Column(db.String(128))  
+    
+    
+class DisabledServiceProfessional(db.Model):
+    __tablename__ = 'disabled_service_professionals'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    email = db.Column(db.String(100))
+    
+    password_hash = db.Column(db.String(128))
+    # Add any other fields you want to preserve

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 c1">
+    <h1>Fraudulent Service Professionals</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Professional Name</th>
+                <th>Service Request</th>
+                <th>Report Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fraud_professional in fraud_professionals %}
+                <tr>
+                    <td>{{ fraud_professional.professional.name }}</td>
+                    <td>{{ fraud_professional.service_request.service_name }}</td>
+                    <td>{{ fraud_professional.report_date }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('admin.disable_professional', professional_id=fraud_professional.professional.id) }}">
+                            <button type="submit">Disable</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+{% endblock %}

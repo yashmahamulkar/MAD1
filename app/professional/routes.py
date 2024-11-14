@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, session
 from flask_login import login_required, current_user, logout_user
-from ..models import ServiceProfessional, ServiceRequest
+from ..models import ServiceProfessional, ServiceRequest,db,FraudulentCustomer
 from datetime import datetime
 
 professional = Blueprint('professional', __name__)
@@ -48,7 +48,8 @@ def pending_services():
     try:
         # Get all pending service requests for the logged-in professional
         pending_services = ServiceRequest.query.filter_by(professional_id=current_user.id, status='requested').all()
-        return render_template('pending_services.html', pending_services=pending_services)
+        accepted_service = ServiceRequest.query.filter_by(professional_id=current_user.id, status='accepted').all()
+        return render_template('pending_services.html', pending_services=pending_services,accepted_services=accepted_service)
     except Exception as e:
         flash(f'An error occurred while fetching the pending services: {e}', 'danger')
         return redirect(url_for('professional.dashboard'))
@@ -74,3 +75,52 @@ def logout():
     except Exception as e:
         flash(f'An error occurred while logging out: {e}', 'danger')
         return redirect(url_for('professional.dashboard'))
+
+
+@professional.route('/accept_service/<int:service_id>', methods=['POST'])
+@login_required
+def accept_service(service_id):
+    try:
+        # Find the service request by ID
+        service_request = ServiceRequest.query.get(service_id)
+        if service_request and service_request.professional_id == current_user.id and service_request.status == 'requested':
+            service_request.status = 'accepted'
+            db.session.commit()  # Commit the change to the database
+            flash('Service request has been accepted.', 'success')
+        else:
+            flash('Service request not found or already accepted.', 'warning')
+        return redirect(url_for('professional.pending_services'))
+    except Exception as e:
+        flash(f'An error occurred while accepting the service: {e}', 'danger')
+        return redirect(url_for('professional.pending_services'))
+    
+@professional.route('/report_fraud/<int:service_id>', methods=['POST'])
+@login_required
+def report_fraud(service_id):
+    try:
+        service_request = ServiceRequest.query.get(service_id)
+        
+        # Check if the service request exists and the current user is the professional assigned to the service
+        if service_request and service_request.professional_id == current_user.id:
+            # Update the service request status to 'fraudulent'
+            service_request.status = 'fraudulent'
+            
+            # Create a fraud report without needing a reason
+            fraud_report = FraudulentCustomer(
+                customer_id=service_request.customer_id,
+                service_request_id=service_request.id,
+            )
+            
+            # Add the fraud report and commit changes to the database
+            db.session.add(fraud_report)
+            db.session.commit()
+            
+            flash('Fraudulent customer has been reported and service marked as fraudulent.', 'success')
+        else:
+            flash('Service request not found or you are not authorized to report fraud.', 'warning')
+
+        return redirect(url_for('professional.pending_services'))
+    
+    except Exception as e:
+        flash(f'An error occurred while reporting the fraud: {e}', 'danger')
+        return redirect(url_for('professional.pending_services'))
