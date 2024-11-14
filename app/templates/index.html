@@ -4,31 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <!-- Bootstrap CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Global styles */
+        body {
+            background-color: #343a40; /* Dark background */
+            font-family: 'Arial', sans-serif;
+            color: white;
+            height: 100vh; /* Full page height */
+            margin: 0;
+        }
+
+        .hero-section {
+            background-color: #1d2730; /* Darker shade */
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            height: 100vh; /* Full screen height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .hero-section h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+
+        .login-button {
+            width: 200px;
+            margin: 10px;
+            font-size: 1.2rem;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #212529; /* Dark footer */
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Home Page</h1>
-    <p>Please select your role to log in:</p>
-    
-    <div>
-        <!-- Customer Login Button -->
-        <a href="{{ url_for('main.customer_login') }}">
-            <button>Customer Login</button>
-        </a>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <h1>Welcome to Our Home Service App</h1>
+        <p>Choose your role and log in to get started with our services.</p>
+        <div class="button-container">
+            <!-- Customer Login Button -->
+            <a href="{{ url_for('main.customer_login') }}">
+                <button class="btn btn-primary login-button">Customer Login</button>
+            </a>
+            <!-- Service Professional Login Button -->
+            <a href="{{ url_for('main.professional_login') }}">
+                <button class="btn btn-success login-button">Service Professional Login</button>
+            </a>
+            <!-- Admin Login Button -->
+            <a href="{{ url_for('main.admin_login') }}">
+                <button class="btn btn-danger login-button">Admin Login</button>
+            </a>
+        </div>
     </div>
-    
-    <div>
-        <!-- Service Professional Login Button -->
-        <a href="{{ url_for('main.professional_login') }}">
-            <button>Service Professional Login</button>
-        </a>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Home Service App. All rights reserved.</p>
     </div>
-    
-    <div>
-        <!-- Admin Login Button -->
-        <a href="{{ url_for('main.admin_login') }}">
-            <button>Admin Login</button>
-        </a>
-    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>

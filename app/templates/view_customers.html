@@ -1,34 +1,121 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Customers</title>
-</head>
-<body>
-    <div class="content">
-        <h2>All Customers</h2>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </tr>
-            {% for customer in customers %}
-            <tr>
-                <td>{{ customer.id }}</td>
-                <td>{{ customer.name }}</td>
-                <td>{{ customer.email }}</td>
-                <td>
-                    <form action="{{ url_for('admin.delete_customer', customer_id=customer.id) }}" method="post">
-                        <button type="submit" onclick="return confirm('Are you sure you want to delete this account?');">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
+{% extends 'admin_dashboard.html' %}
+
+{% block content %}
+    <div class="container mt-5 c1">
+        <h2 class="mb-4">All Customers</h2>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.id }}</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.email }}</td>
+                    <td>
+                        <!-- Delete button with confirmation -->
+                        <form action="{{ url_for('admin.delete_customer', customer_id=customer.id) }}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger action-btn" onclick="return confirm('Are you sure you want to delete this account?');">Delete</button>
+                        </form>
+
+                        <!-- View services button -->
+                        <a href="{{ url_for('admin.view_customer_services', customer_id=customer.id) }}" class="btn btn-info action-btn ml-2 b3">View Services</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
-        <a href="{{ url_for('admin.dashboard') }}">Back to Dashboard</a>
+
     </div>
-</body>
-</html>
+
+    <!-- Custom CSS -->
+    <style>
+        .c1 {
+            display: flex;
+            flex-direction: column;
+            padding-left: 20px;
+        }
+
+        .b1 {
+            width: 10vw;
+            text-decoration: none;
+        }
+        
+        .b3{
+            text-decoration: none;
+            color: white;
+            width: 10vw;
+        }
+        /* Custom CSS for better table presentation */
+        .table th, .table td {
+            text-align: center;
+        }
+
+        .table th {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        /* Styling for action buttons */
+        .action-btn {
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger.action-btn {
+            background-color: #e74c3c;
+            border-color: #c0392b;
+        }
+
+        .btn-danger.action-btn:hover {
+            background-color: #c0392b;
+            border-color: #7f1f1f;
+        }
+
+        .btn-info.action-btn {
+            background-color: #3498db;
+            border-color: #2980b9;
+        }
+
+        .btn-info.action-btn:hover {
+            background-color: #2980b9;
+            border-color: #1f6f8b;
+        }
+
+        .btn-secondary {
+            background-color: #95a5a6;
+            border-color: #7f8c8d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+            border-color: #5f6a6a;
+        }
+
+        /* Ensure there's spacing between sections */
+        .container > * {
+            margin-bottom: 20px;
+        }
+
+        /* Add spacing between action buttons */
+        .btn-info.ml-2 {
+            margin-left: 10px;
+        }
+    </style>
+{% endblock %}

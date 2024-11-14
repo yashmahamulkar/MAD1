@@ -5,18 +5,11 @@ from datetime import datetime
 
 customer = Blueprint('customer', __name__)
 
-from flask import Blueprint, render_template, request, redirect, url_for
-from flask_login import login_required, current_user
-from ..models import Service, ServiceProfessional, ServiceRequest, db
-from datetime import datetime
-
-customer = Blueprint('customer', __name__)
-
 @customer.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
     services = Service.query.all()
-    service_providers = ServiceProfessional.query.all()  # Initialize service_providers to avoid undefined variable issue
+    service_providers = []  # Initialize service_providers as an empty list
     selected_service = None
     selected_city = None
     selected_pincode = None
@@ -26,6 +19,9 @@ def dashboard():
         selected_service = request.form.get('service')
         selected_city = request.form.get('city')
         selected_pincode = request.form.get('pincode')
+
+        # Fetch service providers only after the form is submitted
+        service_providers = ServiceProfessional.query.all()
 
         # Filter service providers based on selected filters
         if selected_service:
@@ -71,12 +67,13 @@ def dashboard():
     return render_template(
         'customer_dashboard.html',
         services=services,
-        service_providers=service_providers,
+        service_providers=service_providers,  # Pass filtered service providers
         customer_requests=customer_requests,
         selected_service=selected_service,
         selected_city=selected_city,
         selected_pincode=selected_pincode
     )
+
 
 @customer.route('/request_service', methods=['GET', 'POST'])
 @login_required
@@ -103,7 +100,6 @@ def request_service():
     return render_template('request_service.html', service_id=service_id, professional_id=professional_id)
 
 
-
 @customer.route('/requests', methods=['GET'])
 @login_required
 def view_requests():
@@ -116,3 +112,34 @@ def view_requests():
 def view_services():
     services = Service.query.all()
     return render_template('view_services.html', services=services)
+
+
+@customer.route('/customer/service_requests')
+@login_required
+def customer_service_request():
+    # Get all customer service requests for the logged-in customer
+    customer_requests = ServiceRequest.query.filter_by(customer_id=current_user.id).all()
+    return render_template('customer_service_request.html', customer_requests=customer_requests)
+
+
+@customer.route('/customer/service-request/mark-completed/<int:request_id>', methods=['GET', 'POST'])
+@login_required
+def mark_as_completed(request_id):
+    service_request = ServiceRequest.query.get_or_404(request_id)
+
+
+    if service_request.customer_id != current_user.id:
+        return redirect(url_for('customer.dashboard'))
+
+    if request.method == 'POST':
+
+        remarks = request.form.get('remarks')
+
+        service_request.mark_as_completed()
+        service_request.remarks = remarks
+        db.session.commit()
+
+        return redirect(url_for('customer.customer_service_request'))
+
+ 
+    return render_template('customer/service_request_detail.html', request=service_request)

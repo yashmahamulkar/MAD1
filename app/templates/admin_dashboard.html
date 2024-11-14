@@ -55,6 +55,26 @@
             background-color: #34495e;
         }
 
+        .sidebar .logout-button {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .sidebar .logout-button a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+            background-color: #e74c3c;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .sidebar .logout-button a:hover {
+            background-color: #c0392b;
+        }
+
         .content {
             flex-grow: 1;
             padding: 20px;
@@ -74,21 +94,24 @@
 </head>
 <body>
     <div class="container">
-        <!-- Sidebar Section -->
+
         <div class="sidebar">
             <h2>Admin Dashboard</h2>
             <ul>
                 <li><a href="{{ url_for('admin.view_customers') }}">View Customers</a></li>
                 <li><a href="{{ url_for('admin.view_service_professionals') }}">View Service Professionals</a></li>
                 <li><a href="{{ url_for('admin.view_services') }}">View Services</a></li> <!-- New link for services -->
-                <li><a href="{{ url_for('admin.create_service') }}">Create Service</a></li> <!-- New link to create service -->
             </ul>
+
+            <!-- Logout Button -->
+            <div class="logout-button">
+                <a href="{{ url_for('main.logout') }}">Logout</a>
+            </div>
         </div>
-        
-        <!-- Content Section -->
+
         <div class="content">
-            <h1>Welcome to the Admin Dashboard</h1>
-            <p>Select an option from the sidebar to manage customers, service professionals, or services.</p>
+            {% block content %}
+            {% endblock %}
         </div>
     </div>
 </body>

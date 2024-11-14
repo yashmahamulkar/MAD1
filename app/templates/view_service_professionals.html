@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Service Professionals</title>
-</head>
-<body>
-    <div class="content">
+{% extends 'admin_dashboard.html' %}
+
+{% block content %}
         <h2>All Service Professionals</h2>
         <table>
             <tr>
@@ -28,7 +22,5 @@
             </tr>
             {% endfor %}
         </table>
-        <a href="{{ url_for('admin.dashboard') }}">Back to Dashboard</a>
-    </div>
-</body>
-</html>
+
+        {% endblock %}

@@ -1,19 +1,19 @@
 from flask import Blueprint, render_template, redirect, url_for, flash,request
 from flask_login import login_required
-from ..models import Customer, ServiceProfessional, db,Service
+from ..models import Customer, ServiceProfessional, db,Service,ServiceRequest
 
 admin = Blueprint('admin', __name__)
 
 @admin.route('/dashboard')
 @login_required
 def dashboard():
-    # Render the dashboard with sidebar options for customers and service professionals
+
     return render_template('admin_dashboard.html')
 
 @admin.route('/view_customers')
 @login_required
 def view_customers():
-    customers = Customer.query.all()  # Fetch all customers
+    customers = Customer.query.all()  
     return render_template('view_customers.html', customers=customers)
 
 @admin.route('/view_service_professionals')
@@ -98,3 +98,14 @@ def view_services():
     services = Service.query.all()  # Fetch all services
     return render_template('view_services.html', services=services)
 
+
+
+@admin.route('/view_customer_services/<int:customer_id>')
+@login_required
+def view_customer_services(customer_id):
+    # Fetch the customer object
+    customer = Customer.query.get_or_404(customer_id)
+    # Fetch the services taken by the customer by joining ServiceRequest
+    customer_services = ServiceRequest.query.filter_by(customer_id=customer.id).all()
+    
+    return render_template('view_customer_services.html', customer=customer, customer_services=customer_services)
