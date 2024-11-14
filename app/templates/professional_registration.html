@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Registration</title>
+</head>
+<body>
+    <h1>Professional Registration</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        
+        <label for="name">Name:</label>
+        {{ form.name(size=32) }}<br>
+        
+        <label for="email">Email:</label>
+        {{ form.email(size=32) }}<br>
+        
+        <label for="password">Password:</label>
+        {{ form.password(size=32) }}<br>
+        
+        <label for="city">City:</label>
+        {{ form.city(size=32) }}<br>
+        
+        <label for="pincode">Pincode:</label>
+        {{ form.pincode(size=10) }}<br>
+        
+        <label for="experience">Experience (in years):</label>
+        {{ form.experience(size=3) }}<br>
+        
+        <label for="rate">Rate (per hour):</label>
+        {{ form.rate(size=10) }}<br>
+        
+        <label for="time_required">Time Required:</label>
+        <select name="time_required" id="time_required">
+            <option value="30 minutes">30 minutes</option>
+            <option value="1 hour">1 hour</option>
+            <option value="1.5 hours">1.5 hours</option>
+            <option value="2 hours">2 hours</option>
+            <option value="custom">Custom</option>
+        </select><br>
+        
+        <label for="service">Service:</label>
+        {{ form.service() }}<br>
+        
+        <button type="submit">Register</button>
+    </form>
+</body>
+</html>

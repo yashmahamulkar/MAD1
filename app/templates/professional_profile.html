@@ -1,0 +1,28 @@
+{% extends "professional_dashboard.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>Profile: {{ professional.name }}</h1>
+        
+        <p><strong>Email:</strong> {{ professional.email }}</p>
+        <p><strong>City:</strong> {{ professional.city }}</p>
+        <p><strong>Pincode:</strong> {{ professional.pincode }}</p>
+        <p><strong>Experience:</strong> {{ professional.experience }} years</p>
+        <p><strong>Additinal Rate:</strong> ${{ professional.rate }} per hour</p>
+        <p><strong>Time Required:</strong> {{ professional.time_required }}</p>
+        
+        <p><strong>Service:</strong> 
+            {% if professional.service %}
+                <strong>{{ professional.service.service_name }}</strong> - ${{ professional.service.base_price }} per hour
+                <br>
+                <strong>Description:</strong> {{ professional.service.service_description or 'No description available.' }}
+                <br>
+
+            {% else %}
+                No service assigned
+            {% endif %}
+        </p>
+    </div>
+{% endblock %}

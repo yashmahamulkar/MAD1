@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Login</title>
+</head>
+<body>
+    <h2>Service Prof Login</h2>
+    <form method="POST" action="{{ url_for('main.professional_login') }}">
+        {{ form.hidden_tag() }}
+        <div>
+            <label for="email">Email:</label>
+            {{ form.email() }}
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            {{ form.password() }}
+        </div>
+        <div>
+            <button type="submit">Login</button>
+        </div>
+    </form>
+    <a href="{{ url_for('main.professional_register') }}">Don't have an account? Register here.</a>
+</body>
+</html>

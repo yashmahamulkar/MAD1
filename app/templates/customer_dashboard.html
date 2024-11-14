@@ -1,0 +1,46 @@
+<form method="POST">
+    <label for="service">Select Service</label>
+    <select name="service" id="service" required>
+        <option value="">Select a Service</option>
+        {% for service in services %}
+            <option value="{{ service.id }}" {% if service.id == selected_service %}selected{% endif %}>{{ service.service_name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="city">City</label>
+    <select name="city" id="city">
+        <option value="">Select City</option>
+        {% for provider in service_providers|unique(attribute='city') %}
+            <option value="{{ provider.city }}" {% if provider.city == selected_city %}selected{% endif %}>{{ provider.city }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="pincode">Pincode</label>
+    <select name="pincode" id="pincode">
+        <option value="">Select Pincode</option>
+        {% for provider in service_providers|unique(attribute='pincode') %}
+            <option value="{{ provider.pincode }}" {% if provider.pincode == selected_pincode %}selected{% endif %}>{{ provider.pincode }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Search</button>
+</form>
+
+{% if service_providers %}
+    <h3>Available Service Providers:</h3>
+    <ul>
+    {% for provider in service_providers %}
+        <li>{{ provider.name }} - {{ provider.city }} - {{ provider.pincode }} 
+            <a href="{{ url_for('customer.request_service', service_id=selected_service, professional_id=provider.id) }}">Request Service</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No service providers available for the selected filters.</p>
+{% endif %}
+
+<h3>Your Service Requests:</h3>
+<ul>
+    {% for request in customer_requests %}
+        <li>{{ request.service.service_name }} - {{ request.professional.name }} - {{ request.status }}</li>
+    {% endfor %}
+</ul>

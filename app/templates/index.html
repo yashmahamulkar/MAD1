@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Welcome to the Home Page</h1>
+    <p>Please select your role to log in:</p>
+    
+    <div>
+        <!-- Customer Login Button -->
+        <a href="{{ url_for('main.customer_login') }}">
+            <button>Customer Login</button>
+        </a>
+    </div>
+    
+    <div>
+        <!-- Service Professional Login Button -->
+        <a href="{{ url_for('main.professional_login') }}">
+            <button>Service Professional Login</button>
+        </a>
+    </div>
+    
+    <div>
+        <!-- Admin Login Button -->
+        <a href="{{ url_for('main.admin_login') }}">
+            <button>Admin Login</button>
+        </a>
+    </div>
+
+</body>
+</html>
