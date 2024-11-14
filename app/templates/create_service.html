@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+{% extends 'admin_dashboard.html' %}
+
+{% block content %}<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -109,15 +111,8 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="sidebar">
-            <h2>Admin Dashboard</h2>
-            <ul>
-                <li><a href="{{ url_for('admin.view_customers') }}">View Customers</a></li>
-                <li><a href="{{ url_for('admin.view_service_professionals') }}">View Service Professionals</a></li>
-                <li><a href="{{ url_for('admin.view_services') }}">View Services</a></li>
-            </ul>
-        </div>
+    <div class="container2">
+        
 
         <div class="content">
             <div class="form-container">
@@ -163,3 +158,4 @@
     </div>
 </body>
 </html>
+{% endblock %}

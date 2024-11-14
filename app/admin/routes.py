@@ -7,8 +7,23 @@ admin = Blueprint('admin', __name__)
 @admin.route('/dashboard')
 @login_required
 def dashboard():
+       
+    customer_count = Customer.query.count()
+    
 
-    return render_template('admin_dashboard.html')
+    professional_count = ServiceProfessional.query.count()
+    
+
+    completed_services = ServiceRequest.query.filter_by(status='completed').count()
+    
+    pending_services = ServiceRequest.query.filter_by(status='requested').count()
+    print(customer_count,professional_count, completed_services, pending_services)
+
+
+    return render_template('dashboard_status.html',customer_count=customer_count,
+                           professional_count=professional_count,
+                           completed_services=completed_services,
+                           pending_services=pending_services)
 
 @admin.route('/view_customers')
 @login_required
@@ -109,3 +124,24 @@ def view_customer_services(customer_id):
     customer_services = ServiceRequest.query.filter_by(customer_id=customer.id).all()
     
     return render_template('view_customer_services.html', customer=customer, customer_services=customer_services)
+
+@admin.route('/dashboard_stats')
+@login_required
+def dashboard_stats():
+   
+    customer_count = Customer.query.count()
+    
+
+    professional_count = ServiceProfessional.query.count()
+    
+
+    completed_services = ServiceRequest.query.filter_by(status='completed').count()
+    
+    pending_services = ServiceRequest.query.filter_by(status='requested').count()
+    print(customer_count,professional_count, completed_services, pending_services)
+
+    return render_template('dashboard_stats.html', 
+                           customer_count=customer_count,
+                           professional_count=professional_count,
+                           completed_services=completed_services,
+                           pending_services=pending_services)

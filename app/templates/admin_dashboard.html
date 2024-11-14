@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <style>
-        /* Internal CSS for Admin Dashboard */
+    
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -96,14 +96,16 @@
     <div class="container">
 
         <div class="sidebar">
-            <h2>Admin Dashboard</h2>
+            
             <ul>
+                
+                <li><a href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
                 <li><a href="{{ url_for('admin.view_customers') }}">View Customers</a></li>
                 <li><a href="{{ url_for('admin.view_service_professionals') }}">View Service Professionals</a></li>
                 <li><a href="{{ url_for('admin.view_services') }}">View Services</a></li> <!-- New link for services -->
             </ul>
 
-            <!-- Logout Button -->
+      
             <div class="logout-button">
                 <a href="{{ url_for('main.logout') }}">Logout</a>
             </div>

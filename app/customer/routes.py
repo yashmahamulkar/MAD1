@@ -9,7 +9,7 @@ customer = Blueprint('customer', __name__)
 @login_required
 def dashboard():
     services = Service.query.all()
-    service_providers = []  # Initialize service_providers as an empty list
+    service_providers = [] 
     selected_service = None
     selected_city = None
     selected_pincode = None
@@ -20,10 +20,8 @@ def dashboard():
         selected_city = request.form.get('city')
         selected_pincode = request.form.get('pincode')
 
-        # Fetch service providers only after the form is submitted
         service_providers = ServiceProfessional.query.all()
 
-        # Filter service providers based on selected filters
         if selected_service:
             service_providers = [provider for provider in service_providers if provider.service_id == int(selected_service)]
         if selected_city:
@@ -38,7 +36,6 @@ def dashboard():
             service_provider = ServiceProfessional.query.get(professional_id)
             service = Service.query.get(service_id)
 
-            # Check if the service request already exists for the customer
             existing_request = ServiceRequest.query.filter_by(
                 customer_id=current_user.id, service_id=service.id, professional_id=professional_id).first()
 
@@ -61,7 +58,7 @@ def dashboard():
 
             return redirect(url_for('customer.dashboard'))
 
-    # Fetch customer service requests
+  
     customer_requests = ServiceRequest.query.filter_by(customer_id=current_user.id).all()
 
     return render_template(
@@ -82,7 +79,7 @@ def request_service():
     professional_id = request.args.get('professional_id')
 
     if request.method == 'POST':
-        # Create a service request based on the posted data
+
         service = Service.query.get(service_id)
         service_provider = ServiceProfessional.query.get(professional_id)
 
@@ -117,7 +114,7 @@ def view_services():
 @customer.route('/customer/service_requests')
 @login_required
 def customer_service_request():
-    # Get all customer service requests for the logged-in customer
+    
     customer_requests = ServiceRequest.query.filter_by(customer_id=current_user.id).all()
     return render_template('customer_service_request.html', customer_requests=customer_requests)
 

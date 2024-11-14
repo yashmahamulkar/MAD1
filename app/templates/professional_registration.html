@@ -4,46 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Registration</title>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Adjust form to fit within one page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .btn {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Professional Registration</h1>
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        
-        <label for="name">Name:</label>
-        {{ form.name(size=32) }}<br>
-        
-        <label for="email">Email:</label>
-        {{ form.email(size=32) }}<br>
-        
-        <label for="password">Password:</label>
-        {{ form.password(size=32) }}<br>
-        
-        <label for="city">City:</label>
-        {{ form.city(size=32) }}<br>
-        
-        <label for="pincode">Pincode:</label>
-        {{ form.pincode(size=10) }}<br>
-        
-        <label for="experience">Experience (in years):</label>
-        {{ form.experience(size=3) }}<br>
-        
-        <label for="rate">Rate (per hour):</label>
-        {{ form.rate(size=10) }}<br>
-        
-        <label for="time_required">Time Required:</label>
-        <select name="time_required" id="time_required">
-            <option value="30 minutes">30 minutes</option>
-            <option value="1 hour">1 hour</option>
-            <option value="1.5 hours">1.5 hours</option>
-            <option value="2 hours">2 hours</option>
-            <option value="custom">Custom</option>
-        </select><br>
-        
-        <label for="service">Service:</label>
-        {{ form.service() }}<br>
-        
-        <button type="submit">Register</button>
-    </form>
+    <div class="container p-3 bg-white border rounded shadow-sm">
+        <h1>Professional Registration</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group">
+                <label for="name">Name:</label>
+                {{ form.name(class="form-control", size=32) }}
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email:</label>
+                {{ form.email(class="form-control", size=32) }}
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password:</label>
+                {{ form.password(class="form-control", size=32) }}
+            </div>
+            
+            <div class="form-group">
+                <label for="city">City:</label>
+                {{ form.city(class="form-control", size=32) }}
+            </div>
+            
+            <div class="form-group">
+                <label for="pincode">Pincode:</label>
+                {{ form.pincode(class="form-control", size=10) }}
+            </div>
+            
+            <div class="form-group">
+                <label for="experience">Experience (in years):</label>
+                {{ form.experience(class="form-control", size=3) }}
+            </div>
+            
+            <div class="form-group">
+                <label for="rate">Rate (per hour):</label>
+                {{ form.rate(class="form-control", size=10) }}
+            </div>
+            
+            <div class="form-group">
+                <label for="time_required">Time Required:</label>
+                <select name="time_required" id="time_required" class="form-control">
+                    <option value="30 minutes">30 minutes</option>
+                    <option value="1 hour">1 hour</option>
+                    <option value="1.5 hours">1.5 hours</option>
+                    <option value="2 hours">2 hours</option>
+                    <option value="custom">Custom</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="service">Service:</label>
+                {{ form.service(class="form-control") }}
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies (Optional for interactive components) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

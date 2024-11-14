@@ -1,0 +1,101 @@
+{% extends 'admin_dashboard.html' %}
+
+{% block content %}
+    <div class="container c15">
+       
+        <div class="row">
+ 
+            <div class="col-md-6">
+                <div class="stat-card text-center">
+                    <div class="stat-icon bg-primary">
+                        <span>{{ customer_count }}</span>
+                    </div>
+                    <h4>Total Customers</h4>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="stat-card text-center">
+                    <div class="stat-icon bg-success">
+                        <span>{{ professional_count }}</span>
+                    </div>
+                    <h4>Total Service Professionals</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+    
+            <div class="col-md-6">
+                <div class="stat-card text-center">
+                    <div class="stat-icon bg-info">
+                        <span>{{ completed_services }}</span>
+                    </div>
+                    <h4>Completed Services</h4>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="stat-card text-center">
+                    <div class="stat-icon bg-warning">
+                        <span>{{ pending_services }}</span>
+                    </div>
+                    <h4>Pending Services</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        .c15{
+
+            margin-left: 15vw;
+        }
+        .stat-card {
+            margin: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            line-height: 80px;
+            border-radius: 50%;
+            font-size: 40px;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bg-primary {
+            background-color: #007bff;
+        }
+
+        .bg-success {
+            background-color: #28a745;
+        }
+
+        .bg-info {
+            background-color: #17a2b8;
+        }
+
+        .bg-warning {
+            background-color: #ffc107;
+        }
+
+        .stat-card h4 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}

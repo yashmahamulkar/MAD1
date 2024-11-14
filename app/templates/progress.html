@@ -1,0 +1,114 @@
+{% extends 'professional_dashboard.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-primary mb-3">Welcome, {{ user_name }}!</h2>
+            <p class="text-muted">Email: {{ user_email }}</p>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <!-- Pending Services Section -->
+        <div class="col-md-6">
+            <h3 class="mb-4 text-warning">Pending Services</h3>
+            <div class="count-box">
+                <div class="count-circle bg-warning text-white">{{ pending_services_count }}</div>
+            </div>
+        </div>
+
+        <!-- Completed Services Section -->
+        <div class="col-md-6">
+            <h3 class="mb-4 text-success">Completed Services</h3>
+            <div class="count-box">
+                <div class="count-circle bg-success text-white">{{ completed_services_count }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="row mt-5">
+        <div class="col-6 c23">
+            <h3 class="mb-4 ">Service Status Overview</h3>
+            <canvas id="serviceStatusChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Add your custom styles -->
+<style>
+    .c23{
+        margin-left: 25vw;
+    }
+
+    .count-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 15px;
+    }
+
+    .count-circle {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .count-box .count-circle.bg-warning {
+        background-color: #ffc107;
+    }
+
+    .count-box .count-circle.bg-success {
+        background-color: #28a745;
+    }
+
+    /* Adjust the size of the pie chart */
+    #serviceStatusChart {
+        height: 25vh !important;  /* Set the height to 20vh */
+        width: 25vh !important;
+        display: flex;
+        align-items: center; 
+        justify-content: center; /* Make sure it takes full width of its container */
+    }
+</style>
+
+<!-- Add Chart.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('serviceStatusChart').getContext('2d');
+    var serviceStatusChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Pending', 'Completed'],
+            datasets: [{
+                label: 'Service Status',
+                data: [{{ pending_services_count }}, {{ completed_services_count }}],
+                backgroundColor: ['#ffc107', '#28a745'],
+                borderColor: ['#ffffff', '#ffffff'],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw;
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

@@ -11,7 +11,19 @@ def dashboard():
     user_id = session.get('user_id')
     user_name = session.get('user_name')
     user_email = session.get('user_email')
-    return render_template('professional_dashboard.html', user_name=user_name, user_email=user_email)
+   
+    
+    
+    pending_services_count = ServiceRequest.query.filter_by(professional_id=current_user.id, status='requested').count()
+
+    # Count the completed services
+    completed_services_count = ServiceRequest.query.filter_by(professional_id=current_user.id, status='completed').count()
+
+    # Pass the counts to the template
+
+    return render_template('progress.html', user_name=user_name, user_email=user_email,
+                           pending_services_count=pending_services_count, 
+                           completed_services_count=completed_services_count)
 
 @professional.route('/profile')
 @login_required

@@ -1,8 +1,47 @@
 {% extends 'admin_dashboard.html' %}
 
 {% block content %}
-        <h2>All Service Professionals</h2>
-        <table>
+
+
+
+<style>
+    .container2 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+    .service-table {
+        width: 80%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    .service-table th, .service-table td {
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+    .service-table th {
+        background-color: #f2f2f2;
+    }
+    .btn {
+        padding: 5px 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    .btn-danger {
+        background-color: #f44336;
+    }
+    .btn-primary {
+        background-color: #008CBA;
+    }
+</style>
+
+<div class="container2">
+        <h2 class="mb-4">All Service Professionals</h2>
+        <table class="table table-bordered table-striped">
             <tr>
                 <th>ID</th>
                 <th>Name</th>
@@ -16,11 +55,12 @@
                 <td>{{ professional.email }}</td>
                 <td>
                     <form action="{{ url_for('admin.delete_service_professional', professional_id=professional.id) }}" method="post">
-                        <button type="submit" onclick="return confirm('Are you sure you want to delete this account?');">Delete</button>
+                        <button type="submit" class=".btn-primary" onclick="return confirm('Are you sure you want to delete this account?');">Delete</button>
                     </form>
                 </td>
             </tr>
             {% endfor %}
         </table>
+    </div>
 
         {% endblock %}
